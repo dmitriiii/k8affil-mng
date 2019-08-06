@@ -11,7 +11,7 @@ class K8affil_Mng_My_Ajax
     add_action('wp_ajax_nopriv_k8affil_act_coup', array( $this, 'k8affil_act_coup' ));
     add_action('wp_ajax_k8affil_act_coup', array( $this, 'k8affil_act_coup' ));
   }
-  public function final( $arrr ){
+  public function finn( $arrr ){
     echo json_encode( $arrr );
     exit();
   }
@@ -22,13 +22,13 @@ class K8affil_Mng_My_Ajax
     #Sent not from website
     if( !isset( $action ) || $action != 'k8affil_act_typecat' ){
       $arrr['error'] = 'Submit via website, please';
-      $this->final($arrr);
+      $this->finn($arrr);
     }
     #Affiliate Taxonomies
     K8affil_Mng_My_Help::impTax('affcoups_coupon_category');
     K8affil_Mng_My_Help::impTax('affcoups_coupon_type');
     $arrr[''] = 'ok!';
-    $this->final($arrr);
+    $this->finn($arrr);
   }
   #Sync Affiliate Vendors
   public function k8affil_act_vend(){
@@ -37,7 +37,7 @@ class K8affil_Mng_My_Ajax
     #Sent not from website
     if( !isset( $action ) || $action != 'k8affil_act_vend' ){
       $arrr['error'] = 'Submit via website, please';
-      $this->final($arrr);
+      $this->finn($arrr);
     }
     $res =  wp_remote_get( 'https://vpn-anbieter-vergleich-test.de/wp-json/wp/v2/affcoups_vendor?per_page=100' );
     $decc = json_decode( $res['body'], true );
@@ -93,7 +93,7 @@ class K8affil_Mng_My_Ajax
 
     }
     $arrr[''] = 'ok!';
-    $this->final($arrr);
+    $this->finn($arrr);
   }
   #Sync Coupons
   public function k8affil_act_coup(){
@@ -102,7 +102,7 @@ class K8affil_Mng_My_Ajax
     #Sent not from website
     if( !isset( $action ) || $action != 'k8affil_act_coup' ){
       $arrr['error'] = 'Submit via website, please';
-      $this->final($arrr);
+      $this->finn($arrr);
     }
     $res =  wp_remote_get( 'https://vpn-anbieter-vergleich-test.de/wp-json/wp/v2/affcoups_coupon?per_page=100' );
     $decc = json_decode( $res['body'], true );
@@ -203,7 +203,7 @@ class K8affil_Mng_My_Ajax
     endforeach;
 
     $arrr[''] = 'ok!';
-    $this->final($arrr);
+    $this->finn($arrr);
   }
 }
 new K8affil_Mng_My_Ajax;
