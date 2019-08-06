@@ -6,13 +6,10 @@ class K8affil_Mng_My_Ajax
     //Sync Affiliate categories and type
     add_action('wp_ajax_nopriv_k8affil_act_typecat', array( $this, 'k8affil_act_typecat' ));
     add_action('wp_ajax_k8affil_act_typecat', array( $this, 'k8affil_act_typecat' ));
-
     add_action('wp_ajax_nopriv_k8affil_act_vend', array( $this, 'k8affil_act_vend' ));
     add_action('wp_ajax_k8affil_act_vend', array( $this, 'k8affil_act_vend' ));
-
     add_action('wp_ajax_nopriv_k8affil_act_coup', array( $this, 'k8affil_act_coup' ));
     add_action('wp_ajax_k8affil_act_coup', array( $this, 'k8affil_act_coup' ));
-
   }
   public function final( $arrr ){
     echo json_encode( $arrr );
@@ -33,7 +30,6 @@ class K8affil_Mng_My_Ajax
     $arrr[''] = 'ok!';
     $this->final($arrr);
   }
-
   #Sync Affiliate Vendors
   public function k8affil_act_vend(){
     $arrr = array();
@@ -43,7 +39,6 @@ class K8affil_Mng_My_Ajax
       $arrr['error'] = 'Submit via website, please';
       $this->final($arrr);
     }
-
     $res =  wp_remote_get( 'https://vpn-anbieter-vergleich-test.de/wp-json/wp/v2/affcoups_vendor?per_page=100' );
     $decc = json_decode( $res['body'], true );
     foreach ($decc as $postt) {
@@ -66,7 +61,6 @@ class K8affil_Mng_My_Ajax
         'post_name' => $postt['slug'],
         'post_type' => $postt['type'],
       );
-
       #Update Existing post
       if( count($queryy->posts) > 0 ){
         $postarr['ID'] = $queryy->posts[0]->ID;
@@ -87,7 +81,6 @@ class K8affil_Mng_My_Ajax
         }
       }
 
-
         #Check if image Already uploaded before
       $img_nam = K8affil_Mng_My_Help::getFileName($postt['k8_feat_img']);
       $imgg_id = K8affil_Mng_My_Help::doesUpl( $img_nam );
@@ -98,12 +91,10 @@ class K8affil_Mng_My_Ajax
       #set post meta image
       update_post_meta( $pid, 'affcoups_vendor_image', $imgg_id );
 
-
     }
     $arrr[''] = 'ok!';
     $this->final($arrr);
   }
-
   #Sync Coupons
   public function k8affil_act_coup(){
     $arrr = array();
@@ -113,10 +104,8 @@ class K8affil_Mng_My_Ajax
       $arrr['error'] = 'Submit via website, please';
       $this->final($arrr);
     }
-
     $res =  wp_remote_get( 'https://vpn-anbieter-vergleich-test.de/wp-json/wp/v2/affcoups_coupon?per_page=100' );
     $decc = json_decode( $res['body'], true );
-
     foreach ($decc as $postt) :
       $ar = array(
         'post_type'   => 'affcoups_coupon',
@@ -131,7 +120,6 @@ class K8affil_Mng_My_Ajax
       );
       $queryy = new WP_Query( $ar );
 
-
       $postarr = array(
         'post_title' => $postt['title']['rendered'],
         'post_content' => $postt['k8_cont'],
@@ -142,20 +130,16 @@ class K8affil_Mng_My_Ajax
         'post_excerpt' => $postt['k8_exc'],
         'menu_order' => $postt['menu_order'],
       );
-
       #Update Existing post
       if( count($queryy->posts) > 0 ){
         $postarr['ID'] = $queryy->posts[0]->ID;
         $pid = wp_update_post( $postarr );
       }
-
       #Create new
       else{
         $pid = wp_insert_post( $postarr );
       }
-
       update_field( 'k8_acf_or_id', $postt['id'], $pid );
-
       $pm_arr = array(
         // 'affcoups_coupon_vendor',
         'affcoups_coupon_discount',
@@ -168,13 +152,11 @@ class K8affil_Mng_My_Ajax
         'affcoups_coupon_featured',
         'affcoups_coupon_highlighted'
       );
-
       foreach ($pm_arr as $item) {
         if( isset( $postt['k8_pm'][$item][0] ) ){
           update_post_meta( $pid, $item, $postt['k8_pm'][$item][0] );
         }
       }
-
 
        #Check if image Already uploaded before
       $img_nam = K8affil_Mng_My_Help::getFileName($postt['k8_feat_img']);
@@ -185,7 +167,6 @@ class K8affil_Mng_My_Ajax
       }
       #set post meta image
       update_post_meta( $pid, 'affcoups_coupon_image', $imgg_id );
-      
 
       #Set Vendor
       if( isset( $postt['k8_pm']['affcoups_coupon_vendor'] ) && $postt['k8_pm']['affcoups_coupon_vendor'][0] != 0 ){
@@ -206,7 +187,6 @@ class K8affil_Mng_My_Ajax
           update_post_meta( $pid, 'affcoups_coupon_vendor', $quer->posts[0]->ID );
         }
       }
-
       #TAXONOMIES
       #Type
       if(is_array( $postt['k8_aff_typ']) && count($postt['k8_aff_typ']) > 0  ){
@@ -220,9 +200,7 @@ class K8affil_Mng_My_Ajax
           wp_set_object_terms( $pid, array($v['slug']), 'affcoups_coupon_category', true );
         }
       }
-
     endforeach;
-
 
     $arrr[''] = 'ok!';
     $this->final($arrr);
