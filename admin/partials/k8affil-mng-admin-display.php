@@ -46,17 +46,17 @@ class K8affil_Mng_Admin_Display
 	    	</tr>
 	    	<tr>
 	    		<th>1</th>
-	    		<th><strong><em><u>Types & Categories</u></em></strong></th>
+	    		<th><strong><em><u>Affiliates Types & Categories</u></em></strong></th>
 	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_typecat">Sync!</button></th>
 	    	</tr>
 	    	<tr>
 	    		<th>2</th>
-	    		<th><strong><em><u>Vendors</u></em></strong></th>
+	    		<th><strong><em><u>Affiliates Vendors</u></em></strong></th>
 	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_vend">Sync!</button></th>
 	    	</tr>
 	    	<tr>
 	    		<th>3</strong></th>
-	    		<th><strong><em><u>Coupons</u></em></strong></th>
+	    		<th><strong><em><u>Affiliates Coupons</u></em></strong></th>
 	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_coup">Sync!</button></th>
 	    	</tr>
 	    </table>
