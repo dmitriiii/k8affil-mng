@@ -20,8 +20,8 @@ class K8affil_Mng_Admin_Display
 	public $icon_url;
 	public $position;
   public function __construct(){
-  	$this->page_title = 'Affiliates Sync';
-		$this->menu_title = 'Affiliates Sync';
+  	$this->page_title = 'Sync';
+		$this->menu_title = 'Sync';
 		$this->capability = 'manage_options';
 		$this->menu_slug  = 'k8affil-mng';
 		$this->function   = 'process';
