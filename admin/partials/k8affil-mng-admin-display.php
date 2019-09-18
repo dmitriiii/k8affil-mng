@@ -37,48 +37,49 @@ class K8affil_Mng_Admin_Display
 		<div class="wrap">
 	    <div id="icon-users" class="icon32"></div>
 	    <h2><?php echo $this->page_title; ?></h2>
-
-	    <table class="wp-list-table widefat fixed striped k8affil-tbl">
-	    	<tr>
-	    		<th style="width: 60px;"><strong>#</strong></th>
-	    		<th style="width: 85%"><h3>Affiliates Sync</h3></th>
-	    		<th><h3>Syncronize</h3></th>
-	    	</tr>
-	    	<tr>
-	    		<th>1</th>
-	    		<th><strong><em><u>Affiliates Types & Categories</u></em></strong></th>
-	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_typecat">Sync!</button></th>
-	    	</tr>
-	    	<tr>
-	    		<th>2</th>
-	    		<th><strong><em><u>Affiliates Vendors</u></em></strong></th>
-	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_vend">Sync!</button></th>
-	    	</tr>
-	    	<tr>
-	    		<th>3</strong></th>
-	    		<th><strong><em><u>Affiliates Coupons</u></em></strong></th>
-	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_coup">Sync!</button></th>
-	    	</tr>
-	    </table>
-			
-			<br>
-			<br>
-
-	    <table class="wp-list-table widefat fixed striped k8affil-tbl">
-	    	<tr>
-	    		<th style="width: 60px;"><strong>#</strong></th>
-	    		<th style="width: 85%"><h3>Custom Taxonomies Sync</h3></th>
-	    		<th><h3>Syncronize</h3></th>
-	    	</tr>
-	    	<tr>
-	    		<th>1</th>
-	    		<th><strong><em><u>Custom taxonomies for posts under VPN Anbieter</u></em></strong></th>
-	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_tax">Sync!</button></th>
-	    	</tr>
-	    </table>
-
-	    <br>
-			<br>
+		
+			<?php 
+			if ( get_site_url() !== 'https://vpn-anbieter-vergleich-test.de') : ?>
+				<table class="wp-list-table widefat fixed striped k8affil-tbl">
+		    	<tr>
+		    		<th style="width: 60px;"><strong>#</strong></th>
+		    		<th style="width: 85%"><h3>Affiliates Sync</h3></th>
+		    		<th><h3>Syncronize</h3></th>
+		    	</tr>
+		    	<tr>
+		    		<th>1</th>
+		    		<th><strong><em><u>Affiliates Types & Categories</u></em></strong></th>
+		    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_typecat">Sync!</button></th>
+		    	</tr>
+		    	<tr>
+		    		<th>2</th>
+		    		<th><strong><em><u>Affiliates Vendors</u></em></strong></th>
+		    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_vend">Sync!</button></th>
+		    	</tr>
+		    	<tr>
+		    		<th>3</strong></th>
+		    		<th><strong><em><u>Affiliates Coupons</u></em></strong></th>
+		    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_coup">Sync!</button></th>
+		    	</tr>
+		    </table>
+				<br>
+				<br>
+		    <table class="wp-list-table widefat fixed striped k8affil-tbl">
+		    	<tr>
+		    		<th style="width: 60px;"><strong>#</strong></th>
+		    		<th style="width: 85%"><h3>Custom Taxonomies Sync</h3></th>
+		    		<th><h3>Syncronize</h3></th>
+		    	</tr>
+		    	<tr>
+		    		<th>1</th>
+		    		<th><strong><em><u>Custom taxonomies for posts under VPN Anbieter</u></em></strong></th>
+		    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_tax">Sync!</button></th>
+		    	</tr>
+		    </table>
+		    <br>
+				<br>
+			<?php
+			endif; ?>
 
 			<table class="wp-list-table widefat fixed striped k8affil-tbl">
 	    	<tr>
