@@ -3,19 +3,57 @@ class K8affil_Mng_My_Help
 {
 	#Sync custom taxonomies
   static function impTax( $taxName ){
-  	$res_aff_cat = wp_remote_get( 'https://vpn-anbieter-vergleich-test.de/wp-json/wp/v2/' . $taxName . '?per_page=100' );
-		$dec_aff_cat = json_decode( $res_aff_cat['body'], true );
+  	
+  	$dec_aff_cat = array();
+		$pg=1;
+		while ( $pg < 100) {
+			$res_aff_cat1 = wp_remote_get( 'https://vpn-anbieter-vergleich-test.de/wp-json/wp/v2/' . $taxName . '?per_page=100&orderby=id&order=asc&page=' . $pg );
+			$dec_aff_cat1 = json_decode( $res_aff_cat1['body'], true );
+			$dec_aff_cat1_old = $dec_aff_cat1;
+			$dec_aff_cat = array_merge( $dec_aff_cat, $dec_aff_cat1 ) ;
+			if( is_array($dec_aff_cat1_old) && count($dec_aff_cat1_old) < 100 ){
+				break;
+			}
+			$pg++;
+		}
+
+
+		// echo '<pre>';
+		// print_r( $dec_aff_cat );
+		// echo '</pre>';
+
 
 		if( is_array( $dec_aff_cat ) && count( $dec_aff_cat ) > 0 ){
 
 			foreach ($dec_aff_cat as $value) {
-				// $tax = 'affcoups_coupon_category';
 				$label = $value['name'];
+
 				$argz = array(
 					'description' => $value['description'],
-					'parent' => $value['parent'],
 					'slug' => $value['slug'],
 				);
+
+				# if is parent taxonomy 
+				if( $value['parent'] == 0 ){
+					$argz['parent'] = $value['parent'];
+				}
+				# If children taxonomy with parent
+				else{
+					$parr =	get_terms(array(
+						'taxonomy' => $value['taxonomy'],
+						'hide_empty' => false,
+						'meta_query' => array(
+							array(
+							  'key'       => 'k8_acf_or_id',
+							  'value'     => $value['parent'],
+							  'compare'   => '='
+							)
+						)
+
+					));
+					$argz['parent'] = $parr[0]->term_id;
+				}
+
 				$exist = get_term_by( 'slug', $value['slug'], $taxName, OBJECT);
 				#Create NEW One
 				if( !$exist ){
@@ -27,6 +65,7 @@ class K8affil_Mng_My_Help
 				$argz['name'] = $label;
 				$res = wp_update_term( $exist->term_id, $taxName, $argz );
 				update_field( 'k8_acf_or_id', $value['id'], $taxName . '_' . $res['term_id'] );
+
 			}//ENDFOREACH
 		}
   }

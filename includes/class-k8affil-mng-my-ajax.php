@@ -1,8 +1,24 @@
 <?php
 class K8affil_Mng_My_Ajax
 {
+  public $tax_arr;
+
   function __construct()
   {
+    $this->tax_arr = array(
+      'betriebssystem',
+      'zahlungsmittel',
+      'sprache',
+      'vpnprotokolle',
+      'anwendungen',
+      'sonderfunktionen',
+      'fixeip',
+      'vpnstandortelaender',
+      'kundenservice',
+      'unternehmen',
+      'bedingungen'
+    );
+
     //Sync Affiliate categories and type
     add_action('wp_ajax_nopriv_k8affil_act_typecat', array( $this, 'k8affil_act_typecat' ));
     add_action('wp_ajax_k8affil_act_typecat', array( $this, 'k8affil_act_typecat' ));
@@ -10,6 +26,10 @@ class K8affil_Mng_My_Ajax
     add_action('wp_ajax_k8affil_act_vend', array( $this, 'k8affil_act_vend' ));
     add_action('wp_ajax_nopriv_k8affil_act_coup', array( $this, 'k8affil_act_coup' ));
     add_action('wp_ajax_k8affil_act_coup', array( $this, 'k8affil_act_coup' ));
+
+    add_action('wp_ajax_nopriv_k8affil_act_tax', array( $this, 'k8affil_act_tax' ));
+    add_action('wp_ajax_k8affil_act_tax', array( $this, 'k8affil_act_tax' ));
+    
   }
   public function finn( $arrr ){
     echo json_encode( $arrr );
@@ -95,7 +115,7 @@ class K8affil_Mng_My_Ajax
     $arrr[''] = 'ok!';
     $this->finn($arrr);
   }
-  #Sync Coupons
+  #Sync Affiliate Coupons
   public function k8affil_act_coup(){
     $arrr = array();
     extract( $_POST );
@@ -202,6 +222,24 @@ class K8affil_Mng_My_Ajax
       }
     endforeach;
 
+    $arrr[''] = 'ok!';
+    $this->finn($arrr);
+  }
+
+  #Sync for custom taxonomies under VPN AMBIETER
+  public function k8affil_act_tax(){
+    $arrr = array();
+    extract( $_POST );
+    #Sent not from website
+    if( !isset( $action ) || $action != 'k8affil_act_tax' ){
+      $arrr['error'] = 'Submit via website, please';
+      $this->finn($arrr);
+    }
+    #Taxonomies
+    foreach ($this->tax_arr as $value) {
+      write_log($value);
+      K8affil_Mng_My_Help::impTax( $value );
+    }
     $arrr[''] = 'ok!';
     $this->finn($arrr);
   }
