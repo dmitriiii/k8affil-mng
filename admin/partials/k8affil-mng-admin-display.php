@@ -41,7 +41,7 @@ class K8affil_Mng_Admin_Display
 	    <table class="wp-list-table widefat fixed striped k8affil-tbl">
 	    	<tr>
 	    		<th style="width: 60px;"><strong>#</strong></th>
-	    		<th style="width: 85%"><h3>Group</h3></th>
+	    		<th style="width: 85%"><h3>Affiliates Sync</h3></th>
 	    		<th><h3>Syncronize</h3></th>
 	    	</tr>
 	    	<tr>
@@ -67,7 +67,7 @@ class K8affil_Mng_Admin_Display
 	    <table class="wp-list-table widefat fixed striped k8affil-tbl">
 	    	<tr>
 	    		<th style="width: 60px;"><strong>#</strong></th>
-	    		<th style="width: 85%"><h3>Group</h3></th>
+	    		<th style="width: 85%"><h3>Custom Taxonomies Sync</h3></th>
 	    		<th><h3>Syncronize</h3></th>
 	    	</tr>
 	    	<tr>
@@ -75,8 +75,24 @@ class K8affil_Mng_Admin_Display
 	    		<th><strong><em><u>Custom taxonomies for posts under VPN Anbieter</u></em></strong></th>
 	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_tax">Sync!</button></th>
 	    	</tr>
-
 	    </table>
+
+	    <br>
+			<br>
+
+			<table class="wp-list-table widefat fixed striped k8affil-tbl">
+	    	<tr>
+	    		<th style="width: 60px;"><strong>#</strong></th>
+	    		<th style="width: 85%"><h3>Update Prices</h3> <?php echo get_site_url(); ?></th>
+	    		<th><h3>Syncronize</h3></th>
+	    	</tr>
+	    	<tr>
+	    		<th>1</th>
+	    		<th><strong><em><u>Update prices for posts under VPN Anbieter</u></em></strong></th>
+	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_price">Sync!</button></th>
+	    	</tr>
+	    </table>
+
 	  </div><!-- .wrap -->
   <?php
   }
