@@ -84,12 +84,12 @@ class K8affil_Mng_Admin_Display
 			<table class="wp-list-table widefat fixed striped k8affil-tbl">
 	    	<tr>
 	    		<th style="width: 60px;"><strong>#</strong></th>
-	    		<th style="width: 85%"><h3>Update Prices</h3></th>
+	    		<th style="width: 85%"><h3>Calculate Price</h3></th>
 	    		<th><h3>Syncronize</h3></th>
 	    	</tr>
 	    	<tr>
 	    		<th>1</th>
-	    		<th><strong><em><u>Update prices for posts under VPN Anbieter</u></em></strong></th>
+	    		<th><strong><em><u>Calculate prices for posts under VPN Anbieter</u></em></strong></th>
 	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_price">Sync!</button></th>
 	    	</tr>
 	    </table>
