@@ -84,7 +84,7 @@ class K8affil_Mng_Admin_Display
 			<table class="wp-list-table widefat fixed striped k8affil-tbl">
 	    	<tr>
 	    		<th style="width: 60px;"><strong>#</strong></th>
-	    		<th style="width: 85%"><h3>Update Prices</h3> <?php echo get_site_url(); ?></th>
+	    		<th style="width: 85%"><h3>Update Prices</h3></th>
 	    		<th><h3>Syncronize</h3></th>
 	    	</tr>
 	    	<tr>
