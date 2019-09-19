@@ -89,7 +89,7 @@ class K8affil_Mng_Admin_Display
 	    	</tr>
 	    	<tr>
 	    		<th>1</th>
-	    		<th><strong><em><u>Calculate prices for posts under VPN Anbieter</u></em></strong></th>
+	    		<th><strong><em><u>Calculate average price for posts under VPN Anbieter category</u></em></strong></th>
 	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_price">Sync!</button></th>
 	    	</tr>
 	    </table>
