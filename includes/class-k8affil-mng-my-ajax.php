@@ -27,14 +27,19 @@ class K8affil_Mng_My_Ajax
     add_action('wp_ajax_nopriv_k8affil_act_coup', array( $this, 'k8affil_act_coup' ));
     add_action('wp_ajax_k8affil_act_coup', array( $this, 'k8affil_act_coup' ));
 
+    #SYNC CUSTOM TAXONOMIES UNDER VPN Ambieter
     add_action('wp_ajax_nopriv_k8affil_act_tax', array( $this, 'k8affil_act_tax' ));
     add_action('wp_ajax_k8affil_act_tax', array( $this, 'k8affil_act_tax' ));
-    
+
+    #Calculate best price per year
+    add_action('wp_ajax_nopriv_k8affil_act_price', array( $this, 'k8affil_act_price' ));
+    add_action('wp_ajax_k8affil_act_price', array( $this, 'k8affil_act_price' ));
   }
   public function finn( $arrr ){
     echo json_encode( $arrr );
     exit();
   }
+
   #Sync Affiliate categories and type
   public function k8affil_act_typecat(){
     $arrr = array();
@@ -50,6 +55,7 @@ class K8affil_Mng_My_Ajax
     $arrr[''] = 'ok!';
     $this->finn($arrr);
   }
+
   #Sync Affiliate Vendors
   public function k8affil_act_vend(){
     $arrr = array();
@@ -115,6 +121,7 @@ class K8affil_Mng_My_Ajax
     $arrr[''] = 'ok!';
     $this->finn($arrr);
   }
+
   #Sync Affiliate Coupons
   public function k8affil_act_coup(){
     $arrr = array();
@@ -237,9 +244,57 @@ class K8affil_Mng_My_Ajax
     }
     #Taxonomies
     foreach ($this->tax_arr as $value) {
-      write_log($value);
+      // write_log($value);
       K8affil_Mng_My_Help::impTax( $value );
     }
+    $arrr[''] = 'ok!';
+    $this->finn($arrr);
+  }
+
+  #Calculate best price for VPN Ambieter
+  public function k8affil_act_price(){
+    $arrr = array();
+    extract( $_POST );
+    #Sent not from website
+    if( !isset( $action ) || $action != 'k8affil_act_price' ){
+      $arrr['error'] = 'Submit via website, please';
+      $this->finn($arrr);
+    }
+    $cf = array(
+      'k8_acf_vpndet_durr1' => 'k8_acf_vpndet_prc1',
+      'k8_acf_vpndet_durr2' => 'k8_acf_vpndet_prc2',
+      'k8_acf_vpndet_durr3' => 'k8_acf_vpndet_prc3',
+      'k8_acf_vpndet_durr4' => 'k8_acf_vpndet_prc4'
+    );
+    $args = array(
+      'post_type'   => 'post',
+      'category_name' => 'vpn-anbieter',
+      'posts_per_page' => -1,
+    );
+    $the_query = new WP_Query( $args );
+    if ( $the_query->have_posts() ) :
+      while ( $the_query->have_posts() ) : $the_query->the_post();
+        $pid = get_the_ID();
+        $greatest = null;
+        $durr = null;
+        $prc = null;
+        $avg = null;
+        foreach ($cf as $key => $value) :
+          if( (int)get_field( $key, $pid ) && (float)get_field( $value, $pid ) ){
+            $durr = (int)get_field( $key, $pid );
+            $prc = (float)get_field( $value, $pid );
+            $greatest = $key;
+          }
+        endforeach;
+        if( $greatest && $durr && $prc ){
+          $avg = round( ($prc/$durr), 2 );
+          update_field( 'k8_acf_vpndet_avg', $avg, $pid );
+          update_post_meta( $pid, 'cwp_rev_price', $avg );
+        }
+      endwhile;
+      wp_reset_postdata();
+    endif;
+
     $arrr[''] = 'ok!';
     $this->finn($arrr);
   }
