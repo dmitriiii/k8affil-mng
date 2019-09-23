@@ -2,22 +2,12 @@
 class K8affil_Mng_My_Ajax
 {
   public $tax_arr;
+  public $cust_fields;
 
-  function __construct()
+  function __construct( $args )
   {
-    $this->tax_arr = array(
-      'betriebssystem',
-      'zahlungsmittel',
-      'sprache',
-      'vpnprotokolle',
-      'anwendungen',
-      'sonderfunktionen',
-      'fixeip',
-      'vpnstandortelaender',
-      'kundenservice',
-      'unternehmen',
-      'bedingungen'
-    );
+    $this->tax_arr = $args['tax_arr'];
+    $this->cust_fields = $args['cust_fields'];
 
     //Sync Affiliate categories and type
     add_action('wp_ajax_nopriv_k8affil_act_typecat', array( $this, 'k8affil_act_typecat' ));
@@ -34,6 +24,10 @@ class K8affil_Mng_My_Ajax
     #Calculate best price per year
     add_action('wp_ajax_nopriv_k8affil_act_price', array( $this, 'k8affil_act_price' ));
     add_action('wp_ajax_k8affil_act_price', array( $this, 'k8affil_act_price' ));
+
+    #Sync VPN Ambieter data
+    add_action('wp_ajax_nopriv_k8affil_act_amb', array( $this, 'k8affil_act_amb' ));
+    add_action('wp_ajax_k8affil_act_amb', array( $this, 'k8affil_act_amb' ));
   }
   public function finn( $arrr ){
     echo json_encode( $arrr );
@@ -268,7 +262,7 @@ class K8affil_Mng_My_Ajax
     );
     $args = array(
       'post_type'   => 'post',
-      'category_name' => 'vpn-anbieter',
+      'category_name' => 'vpn-anbieter,anbieter',
       'posts_per_page' => -1,
     );
     $the_query = new WP_Query( $args );
@@ -298,5 +292,101 @@ class K8affil_Mng_My_Ajax
     $arrr[''] = 'ok!';
     $this->finn($arrr);
   }
+
+  #Sync VPN Ambieter data
+  public function k8affil_act_amb(){
+    $arrr = array();
+    extract( $_POST );
+    #Sent not from website
+    if( !isset( $action ) || $action != 'k8affil_act_amb' ){
+      $arrr['error'] = 'Submit via website, please';
+      $this->finn($arrr);
+    }
+
+    $res =  wp_remote_get( 'https://vpn-anbieter-vergleich-test.de/wp-json/my-route/my-posts/' );
+    $decc = json_decode( $res['body'], true );
+
+    $args = array(
+      'post_type'   => 'post',
+      'posts_per_page' => -1, 
+      'category_name' => 'anbieter',
+    );
+    $the_query = new WP_Query( $args );
+    if ( $the_query->have_posts() ) : 
+      while ( $the_query->have_posts() ) : $the_query->the_post(); 
+        $pid = get_the_ID();
+        $k8_acf_vpnid = (int)get_field('k8_acf_vpnid', $pid);
+        
+        if( isset($decc[$k8_acf_vpnid]) ):
+          #Update ACF Fields
+          foreach ($this->cust_fields as $k):
+            #if is Checkbox or Select
+            if( is_array( $decc[$k8_acf_vpnid]['cust_fields'][$k] ) && count( $decc[$k8_acf_vpnid]['cust_fields'][$k] ) > 0 && !isset( $decc[$k8_acf_vpnid]['cust_fields'][$k]['value'] ) ){
+              $vals = array();
+              foreach ($decc[$k8_acf_vpnid]['cust_fields'][$k] as $it) {
+                $vals[] = $it['value'];
+              }
+              update_field( $k, $vals, $pid );
+              continue;
+            }
+            update_field( $k, $decc[$k8_acf_vpnid]['cust_fields'][$k], $pid );
+          endforeach;
+          // END Update ACF Fields
+
+          #Update Taxonomy Fields
+          foreach ($this->tax_arr as $key) :
+            if( is_array( $decc[$k8_acf_vpnid]['taxz'][$key] ) && count( $decc[$k8_acf_vpnid]['taxz'][$key] ) > 0 ){
+              $slug_arr = array();
+              foreach ($decc[$k8_acf_vpnid]['taxz'][$key] as $item) {
+                $slug_arr[] = $item['slug'];
+              }
+              wp_set_object_terms( $pid, $slug_arr, $key );
+            }
+            else{
+              wp_delete_object_term_relationships( $pid, $key );
+            }
+          endforeach;
+          #END Update Taxonomy Fields
+          
+        endif;
+      endwhile; 
+      wp_reset_postdata();
+    endif; 
+
+
+    $arrr[''] = 'ok!';
+    $this->finn($arrr);
+  }
+
 }
-new K8affil_Mng_My_Ajax;
+new K8affil_Mng_My_Ajax(
+  array(
+   'tax_arr' => array(
+      'betriebssystem',
+      'zahlungsmittel',
+      'sprache',
+      'vpnprotokolle',
+      'anwendungen',
+      'sonderfunktionen',
+      'fixeip',
+      'vpnstandortelaender',
+      'kundenservice',
+      'unternehmen',
+      'bedingungen'
+    ),
+    'cust_fields' => array(
+      'k8_acf_vpndet_conn',
+      'k8_acf_vpndet_curr',
+      'k8_acf_vpndet_durr1',
+      'k8_acf_vpndet_prc1',
+      'k8_acf_vpndet_durr2',
+      'k8_acf_vpndet_prc2',
+      'k8_acf_vpndet_durr3',
+      'k8_acf_vpndet_prc3',
+      'k8_acf_vpndet_durr4',
+      'k8_acf_vpndet_prc4',
+      'k8_acf_vpndet_trialz',
+      'k8_acf_vpndet_vid'
+    )
+  )
+);

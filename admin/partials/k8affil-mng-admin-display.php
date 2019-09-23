@@ -78,6 +78,20 @@ class K8affil_Mng_Admin_Display
 		    </table>
 		    <br>
 				<br>
+				<table class="wp-list-table widefat fixed striped k8affil-tbl">
+		    	<tr>
+		    		<th style="width: 60px;"><strong>#</strong></th>
+		    		<th style="width: 85%"><h3>VPN Anbieter Sync</h3></th>
+		    		<th><h3>Syncronize</h3></th>
+		    	</tr>
+		    	<tr>
+		    		<th>1</th>
+		    		<th><strong><em><u>VPN Anbieter Sync Custom Taxonomies and Custom Fields Data</u></em></strong></th>
+		    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_amb">Sync!</button></th>
+		    	</tr>
+		    </table>
+		    <br>
+				<br>
 			<?php
 			endif; ?>
 
