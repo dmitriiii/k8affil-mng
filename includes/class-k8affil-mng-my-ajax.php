@@ -269,19 +269,19 @@ class K8affil_Mng_My_Ajax
     if ( $the_query->have_posts() ) :
       while ( $the_query->have_posts() ) : $the_query->the_post();
         $pid = get_the_ID();
-        $greatest = null;
+        $great_arr = array();
         $durr = null;
         $prc = null;
         $avg = null;
         foreach ($cf as $key => $value) :
-          if( (int)get_field( $key, $pid ) && (float)get_field( $value, $pid ) ){
-            $durr = (int)get_field( $key, $pid );
-            $prc = (float)get_field( $value, $pid );
-            $greatest = $key;
+          if( get_field( $key, $pid ) && get_field( $value, $pid ) ){
+            $durr = get_field( $key, $pid );
+            $prc = get_field( $value, $pid );
+            $great_arr[] = round( ($prc/$durr), 2 );
           }
         endforeach;
-        if( $greatest && $durr && $prc ){
-          $avg = round( ($prc/$durr), 2 );
+        if( count( $great_arr ) > 0 ){
+          $avg = min( $great_arr );
           update_field( 'k8_acf_vpndet_avg', $avg, $pid );
           update_post_meta( $pid, 'cwp_rev_price', $avg );
         }
