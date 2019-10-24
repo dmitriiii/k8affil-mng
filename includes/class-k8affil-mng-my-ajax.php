@@ -372,7 +372,8 @@ new K8affil_Mng_My_Ajax(
       'vpnstandortelaender',
       'kundenservice',
       'unternehmen',
-      'bedingungen'
+      'bedingungen',
+      'sicherheitslevel'
     ),
     'cust_fields' => array(
       'k8_acf_vpndet_conn',
