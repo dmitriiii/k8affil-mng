@@ -308,15 +308,15 @@ class K8affil_Mng_My_Ajax
 
     $args = array(
       'post_type'   => 'post',
-      'posts_per_page' => -1, 
+      'posts_per_page' => -1,
       'category_name' => 'anbieter',
     );
     $the_query = new WP_Query( $args );
-    if ( $the_query->have_posts() ) : 
-      while ( $the_query->have_posts() ) : $the_query->the_post(); 
+    if ( $the_query->have_posts() ) :
+      while ( $the_query->have_posts() ) : $the_query->the_post();
         $pid = get_the_ID();
         $k8_acf_vpnid = (int)get_field('k8_acf_vpnid', $pid);
-        
+
         if( isset($decc[$k8_acf_vpnid]) ):
           #Update ACF Fields
           foreach ($this->cust_fields as $k):
@@ -347,11 +347,11 @@ class K8affil_Mng_My_Ajax
             }
           endforeach;
           #END Update Taxonomy Fields
-          
+
         endif;
-      endwhile; 
+      endwhile;
       wp_reset_postdata();
-    endif; 
+    endif;
 
 
     $arrr[''] = 'ok!';
@@ -361,33 +361,7 @@ class K8affil_Mng_My_Ajax
 }
 new K8affil_Mng_My_Ajax(
   array(
-   'tax_arr' => array(
-      'betriebssystem',
-      'zahlungsmittel',
-      'sprache',
-      'vpnprotokolle',
-      'anwendungen',
-      'sonderfunktionen',
-      'fixeip',
-      'vpnstandortelaender',
-      'kundenservice',
-      'unternehmen',
-      'bedingungen',
-      'sicherheitslevel'
-    ),
-    'cust_fields' => array(
-      'k8_acf_vpndet_conn',
-      'k8_acf_vpndet_curr',
-      'k8_acf_vpndet_durr1',
-      'k8_acf_vpndet_prc1',
-      'k8_acf_vpndet_durr2',
-      'k8_acf_vpndet_prc2',
-      'k8_acf_vpndet_durr3',
-      'k8_acf_vpndet_prc3',
-      'k8_acf_vpndet_durr4',
-      'k8_acf_vpndet_prc4',
-      'k8_acf_vpndet_trialz',
-      'k8_acf_vpndet_vid'
-    )
+    'tax_arr' => K8_VPN_TAX,
+    'cust_fields' => K8_VPN_CF
   )
 );
