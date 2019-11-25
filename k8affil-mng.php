@@ -13,8 +13,8 @@
  * @package           K8affil_Mng
  *
  * @wordpress-plugin
- * Plugin Name:       Affiliates Sync
- * Description:       This plugin helps syncronize Affiliate coupons between different websites
+ * Plugin Name:       Sync
+ * Description:       This plugin helps syncronize data between anbieter websites, as well as Affiliates coupons data between different websites
  * Version:           1.0.0
  * Author:            Krapivko Dmitrii
  * Author URI:        http://example.com/
