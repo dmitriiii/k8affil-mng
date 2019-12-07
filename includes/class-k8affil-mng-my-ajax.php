@@ -329,6 +329,12 @@ class K8affil_Mng_My_Ajax
               update_field( $k, $vals, $pid );
               continue;
             }
+
+            #if Radio Button
+            if( is_array( $decc[$k8_acf_vpnid]['cust_fields'][$k] ) && count( $decc[$k8_acf_vpnid]['cust_fields'][$k] ) > 0 && isset( $decc[$k8_acf_vpnid]['cust_fields'][$k]['value'] ) ){
+              update_field( $k, $decc[$k8_acf_vpnid]['cust_fields'][$k]['value'], $pid );
+              continue;
+            }
             update_field( $k, $decc[$k8_acf_vpnid]['cust_fields'][$k], $pid );
           endforeach;
           // END Update ACF Fields
