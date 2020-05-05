@@ -75,22 +75,37 @@ class K8affil_Mng_Admin_Display
 		    		<th><strong><em><u>Custom taxonomies for posts under VPN Anbieter</u></em></strong></th>
 		    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_tax">Sync!</button></th>
 		    	</tr>
-		    </table>
+		    <!-- </table>
 		    <br>
 				<br>
-				<table class="wp-list-table widefat fixed striped k8affil-tbl">
-		    	<tr>
+				<table class="wp-list-table widefat fixed striped k8affil-tbl"> -->
+		    <!-- 	<tr>
 		    		<th style="width: 60px;"><strong>#</strong></th>
 		    		<th style="width: 85%"><h3>VPN Anbieter Sync</h3></th>
 		    		<th><h3>Syncronize</h3></th>
-		    	</tr>
+		    	</tr> -->
 		    	<tr>
-		    		<th>1</th>
+		    		<th>2</th>
 		    		<th><strong><em><u>VPN Anbieter Sync Custom Taxonomies and Custom Fields Data</u></em></strong></th>
 		    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_amb">Sync!</button></th>
 		    	</tr>
 		    </table>
 		    <br>
+				<br>
+
+				<table class="wp-list-table widefat fixed striped k8affil-tbl">
+		    	<tr>
+		    		<th style="width: 60px;"><strong>#</strong></th>
+		    		<th style="width: 85%"><h3>Routers Sync</h3></th>
+		    		<th><h3>Syncronize</h3></th>
+		    	</tr>
+		    	<tr>
+		    		<th>1</th>
+		    		<th><strong><em><u>Custom fields under router category sync</u></em></strong></th>
+		    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_rou">Sync!</button></th>
+		    	</tr>
+		    </table>
+				<br>
 				<br>
 			<?php
 			endif; ?>
@@ -107,7 +122,7 @@ class K8affil_Mng_Admin_Display
 	    		<th><button class="button button-primary button-large k8affil-btn" data-action="k8affil_act_price">Sync!</button></th>
 	    	</tr>
 	    </table>
-
+			
 	  </div><!-- .wrap -->
   <?php
   }

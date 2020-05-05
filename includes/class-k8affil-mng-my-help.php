@@ -3,7 +3,7 @@ class K8affil_Mng_My_Help
 {
 	#Sync custom taxonomies
   static function impTax( $taxName ){
-  	
+
   	$dec_aff_cat = array();
 		$pg=1;
 		while ( $pg < 100) {
@@ -33,7 +33,7 @@ class K8affil_Mng_My_Help
 					'slug' => $value['slug'],
 				);
 
-				# if is parent taxonomy 
+				# if is parent taxonomy
 				if( $value['parent'] == 0 ){
 					$argz['parent'] = $value['parent'];
 				}
@@ -95,6 +95,12 @@ class K8affil_Mng_My_Help
   static function doesUpl( $filename ) {
 	  global $wpdb;
 	  return intval( $wpdb->get_var( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='_wp_attached_file' AND meta_value LIKE '%/$filename'" ) );
+	}
+
+	#CHECK IF IMAGE UPLOADED BEFORE
+  static function doesUpl2( $filename ) {
+	  global $wpdb;
+	  return intval( $wpdb->get_var( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='_wp_attached_file' AND meta_value LIKE '%$filename'" ) );
 	}
 
 	#Retrieve Filename From URL
