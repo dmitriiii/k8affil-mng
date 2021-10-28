@@ -39,7 +39,7 @@ class K8affil_Mng_Admin_Display
 	    <h2><?php echo $this->page_title; ?></h2>
 		
 			<?php 
-			if ( get_site_url() !== 'https://vpn-anbieter-vergleich-test.de') : ?>
+			if ( get_site_url() !== 'https://vpntester.org') : ?>
 				<table class="wp-list-table widefat fixed striped k8affil-tbl">
 		    	<tr>
 		    		<th style="width: 60px;"><strong>#</strong></th>
