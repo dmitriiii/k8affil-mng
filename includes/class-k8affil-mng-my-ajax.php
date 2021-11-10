@@ -63,7 +63,7 @@ class K8affil_Mng_My_Ajax
 			$arrr['error'] = 'Submit via website, please';
 			$this->finn($arrr);
 		}
-		$res =  wp_remote_get( 'https://vpntester.org/wp-json/wp/v2/affcoups_vendor?per_page=100' );
+		$res =  wp_remote_get( 'https://vpntester.org/wp-json/wp/v2/affcoups_vendor?per_page=100', ['sslverify' => FALSE] );
 		$decc = json_decode( $res['body'], true );
 		foreach ($decc as $postt) {
 			$ar = array(
@@ -129,7 +129,7 @@ class K8affil_Mng_My_Ajax
 			$arrr['error'] = 'Submit via website, please';
 			$this->finn($arrr);
 		}
-		$res =  wp_remote_get( 'https://vpntester.org/wp-json/wp/v2/affcoups_coupon?per_page=100' );
+		$res =  wp_remote_get( 'https://vpntester.org/wp-json/wp/v2/affcoups_coupon?per_page=100', ['sslverify' => FALSE] );
 		$decc = json_decode( $res['body'], true );
 		foreach ($decc as $postt) :
 			$ar = array(
@@ -307,7 +307,7 @@ class K8affil_Mng_My_Ajax
 			$this->finn($arrr);
 		}
 
-		$res =  wp_remote_get( 'https://vpntester.org/wp-json/my-route/my-posts/' );
+		$res =  wp_remote_get( 'https://vpntester.org/wp-json/my-route/my-posts/', ['sslverify' => FALSE] );
 		$decc = json_decode( $res['body'], true );
 
 		$args = array(
@@ -380,7 +380,7 @@ class K8affil_Mng_My_Ajax
 			$this->finn($arrr);
 		}
 
-		$res =  wp_remote_get( 'https://vpntester.org/wp-json/m5-route/m5-routers/' );
+		$res =  wp_remote_get( 'https://vpntester.org/wp-json/m5-route/m5-routers/', ['sslverify' => FALSE] );
 		$decc = json_decode( $res['body'], true );
 
 		$cust_fields = json_decode( file_get_contents( K8_PATH_GLOB . '/json/routers/routers.json' ), true );

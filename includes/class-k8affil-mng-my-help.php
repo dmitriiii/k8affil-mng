@@ -7,7 +7,7 @@ class K8affil_Mng_My_Help
   	$dec_aff_cat = array();
 		$pg=1;
 		while ( $pg < 100) {
-			$res_aff_cat1 = wp_remote_get( 'https://vpntester.org/wp-json/wp/v2/' . $taxName . '?per_page=100&orderby=id&order=asc&page=' . $pg );
+			$res_aff_cat1 = wp_remote_get( 'https://vpntester.org/wp-json/wp/v2/' . $taxName . '?per_page=100&orderby=id&order=asc&page=' . $pg , ['sslverify' => FALSE]);
 			$dec_aff_cat1 = json_decode( $res_aff_cat1['body'], true );
 			$dec_aff_cat1_old = $dec_aff_cat1;
 			$dec_aff_cat = array_merge( $dec_aff_cat, $dec_aff_cat1 ) ;
@@ -74,7 +74,7 @@ class K8affil_Mng_My_Help
   #UPLOAD IMAGES FROM URL
   static function uplImg( $image_url, $parent_id ){
   	$image = $image_url;
-		$get = wp_remote_get( $image );
+		$get = wp_remote_get( $image, ['sslverify' => FALSE] );
 		$type = wp_remote_retrieve_header( $get, 'content-type' );
 		if (!$type)
 				return false;
